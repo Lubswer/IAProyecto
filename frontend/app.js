@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cargar métricas en los divs estáticos
     async function loadMetrics() {
         try {
-            const response = await fetch('http://localhost:8000/metricas');
+            const response = await fetch('https://iaproyecto-6dhe.onrender.com/metricas');
             if (!response.ok) throw new Error('Network error');
             const data = await response.json();
             
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         analyzeBtn.disabled = true;
 
         try {
-            const response = await fetch('http://localhost:8000/analizar', {
+            const response = await fetch('https://iaproyecto-6dhe.onrender.com/analizar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ texto: text })

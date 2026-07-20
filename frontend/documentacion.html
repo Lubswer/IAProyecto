@@ -133,7 +133,7 @@
     // Fetch del Markdown a nuestra propia API
     async function cargarDocumentacion() {
         try {
-            const res = await fetch('http://localhost:8000/markdown');
+            const res = await fetch('https://iaproyecto-6dhe.onrender.com/markdown');
             if (!res.ok) throw new Error('Network error');
             const markdownText = await res.text();
             
