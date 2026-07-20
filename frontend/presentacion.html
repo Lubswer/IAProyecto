@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyecto IA — Presentación</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* Estilos específicos para que la presentación se vea como un informe ejecutivo ordenado */
+.presentation-container {
+    max-width: 900px;
+    margin: 40px auto 80px auto;
+}
+.slide-card {
+    background: var(--ink-2);
+    border: 1px solid var(--rule-l);
+    border-radius: 6px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.slide-card h2 {
+    font-family: var(--serif);
+    color: var(--amber);
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed var(--rule-d);
+    padding-bottom: 10px;
+}
+.slide-card h3 {
+    color: var(--text-l);
+    font-size: 1.2rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.slide-card p, .slide-card ul {
+    color: var(--text-l-muted);
+    line-height: 1.7;
+    font-size: 1.05rem;
+    text-align: justify;
+}
+.slide-card ul {
+    padding-left: 20px;
+}
+.slide-card li {
+    margin-bottom: 10px;
+}
+.slide-card strong {
+    color: var(--text-l);
+    font-weight: 500;
+}
+.tag-highlight {
+    background: rgba(221, 162, 58, 0.1);
+    color: var(--amber);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 0.9em;
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div>
+      <div class="wordmark">PROYECTO IA<span>.</span></div>
+      <div class="tagline">Análisis de sentimientos</div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="documentacion.html">Estructura del Proyecto</a>
+      <a href="presentacion.html" style="color:var(--amber); border-color:var(--amber);">Presentación</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap presentation-container">
+
+    <div class="slide-card">
+        <h2>I. Motivación</h2>
+        <p><strong>¿Por qué elegimos este tema?</strong> Hoy en día, las empresas reciben miles de correos, chats y reseñas diarias. Es humanamente imposible leer y clasificar todo este volumen de información en tiempo real.</p>
+        <p><strong>¿Qué problema aborda?</strong> Resuelve el cuello de botella en la atención al cliente: la falta de priorización. A menudo, quejas urgentes o problemas técnicos graves se pierden en una bandeja de entrada saturada.</p>
+        <p><strong>¿Por qué es relevante?</strong> Permite medir la satisfacción del cliente de forma instantánea y organizar el flujo de trabajo (ej. mandar los correos de soporte técnico al área técnica, y los reclamos de facturación al área financiera).</p>
+        <p><strong>¿Cuál será el aporte de la IA?</strong> Automatiza la lectura, "entiende" la intención del mensaje, extrae entidades clave (marcas, ciudades) usando <span class="tag-highlight">spaCy</span> y calcula matemáticamente qué tan segura está de su decisión.</p>
+    </div>
+
+    <div class="slide-card">
+        <h2>II. Modelos implementados</h2>
+        <ul>
+            <li><strong>TfidfVectorizer:</strong> Para convertir el texto humano en vectores numéricos entendibles por la máquina.</li>
+            <li><strong>Multinomial Naive Bayes (<span class="tag-highlight">MultinomialNB</span>):</strong> Utilizado para clasificar la <strong>Categoría</strong> del mensaje. Es el estándar de oro tradicional para clasificación de textos.</li>
+            <li><strong>Complement Naive Bayes (<span class="tag-highlight">ComplementNB</span>):</strong> Utilizado para el <strong>Sentimiento</strong> (Positivo, Neutral, Negativo). Diseñado específicamente para rendir mejor cuando los datos están desbalanceados (ej. muchas más quejas negativas que mensajes positivos).</li>
+            <li><strong>spaCy (<span class="tag-highlight">es_core_news_sm</span>):</strong> Modelo avanzado de NLP usado para lematización y Reconocimiento de Entidades Nombradas (NER).</li>
+        </ul>
+    </div>
+
+    <div class="slide-card">
+        <h2>III. Estado del arte</h2>
+        <p>El análisis de sentimientos mediante técnicas de Procesamiento de Lenguaje Natural (NLP) ha evolucionado significativamente en los últimos años. Tradicionalmente, este proceso se basaba en diccionarios de palabras (lexicon-based), los cuales tenían limitaciones severas para entender el sarcasmo, el contexto o las estructuras complejas de las oraciones.</p>
+        <p>En el contexto actual, el estado del arte se ha desplazado hacia modelos basados en aprendizaje supervisado (como Logistic Regression o Random Forest con vectores TF-IDF) y, más recientemente, hacia arquitecturas de Deep Learning basadas en Transformers.</p>
+        <p>Estas tecnologías permiten que las máquinas no solo identifiquen palabras clave, sino que comprendan la intención detrás de cada comentario. Nuestro proyecto <strong>ConnectaNet</strong> se alinea con este avance, aplicando técnicas de aprendizaje supervisado para ofrecer una clasificación eficiente y escalable en entornos de soporte al cliente, superando los métodos manuales tradicionales.</p>
+    </div>
+
+    <div class="slide-card">
+        <h2>IV. Alcance del proyecto</h2>
+        <h3>Lo que SÍ hace:</h3>
+        <p>El proyecto abarca el ciclo completo de vida del Machine Learning. Va desde el entrenamiento del modelo a partir de un CSV, el cálculo automático de métricas (Accuracy, F1-Score), hasta el despliegue del modelo en un servidor Backend (FastAPI) consumido en tiempo real por una interfaz Frontend web moderna, estética y funcional.</p>
+        
+        <h3>Lo que NO hace:</h3>
+        <p>El sistema actual no guarda un historial de los análisis en una base de datos persistente (como SQL) a largo plazo, ni re-entrena a la IA automáticamente sin intervención manual.</p>
+    </div>
+
+    <div class="slide-card">
+        <h2>V. Conclusiones</h2>
+        <ul>
+            <li>Se demostró que algoritmos clásicos y eficientes como Naive Bayes, combinados con técnicas de preprocesamiento modernas (Lematización), logran métricas de precisión altísimas (cercanas al 99% en entornos controlados).</li>
+            <li>Separar el código de entrenamiento del código de inferencia es vital. Guardar el modelo en archivos <span class="tag-highlight">.pkl</span> redujo el tiempo de respuesta a milisegundos, logrando una web reactiva.</li>
+            <li>La interfaz gráfica demostró que los resultados matemáticos puros (probabilidades y métricas) pueden presentarse de forma amigable e intuitiva para cualquier usuario.</li>
+        </ul>
+    </div>
+
+    <div class="slide-card">
+        <h2>VI. Recomendaciones y Trabajos Futuros</h2>
+        <ul>
+            <li><strong>Migración a Deep Learning:</strong> A futuro, reemplazar Naive Bayes por un modelo de Transformers para detectar ironías o sarcasmos complejos.</li>
+            <li><strong>Base de Datos y Dashboards:</strong> Conectar el backend a PostgreSQL para guardar todas las consultas reales y generar gráficos estadísticos mensuales de la satisfacción del cliente.</li>
+            <li><strong>Bucle de retroalimentación (Feedback Loop):</strong> Agregar un botón en la interfaz web que permita al usuario corregir a la IA si se equivocó, guardando ese texto para el próximo re-entrenamiento del CSV.</li>
+        </ul>
+    </div>
+
+</main>
+
+<footer class="wrap">
+  <div class="colophon">Proyecto IA</div>
+  <div class="foot-links">
+    <a href="https://github.com/Lubswer/IAProyecto.git">GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>

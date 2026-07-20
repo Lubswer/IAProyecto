@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyecto — Estructura   </title>
+<link rel="stylesheet" href="style.css">
+<!-- Incluimos marked.js para parsear Markdown en vivo -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<!-- Highlight.js para coloreado de sintaxis -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<!-- Mermaid para diagramas de flujo -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad: false, theme: 'dark'});</script>
+
+<style>
+/* Ajustes adicionales para que el Markdown se vea bien con nuestro estilo Glosa */
+#doc-content {
+    margin-top: 40px;
+    margin-bottom: 80px;
+}
+#doc-content h1, #doc-content h2, #doc-content h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    color: var(--text-l);
+}
+#doc-content h1 {
+    font-size: 2.2rem;
+    color: var(--amber);
+    margin-top: 0;
+}
+#doc-content h2 {
+    font-size: 1.6rem;
+    border-bottom: 1px dashed var(--rule-l);
+    padding-bottom: 8px;
+}
+#doc-content p {
+    font-size: 1rem;
+    color: var(--text-l-muted);
+    margin-bottom: 1.2em;
+    max-width: 80ch;
+    line-height: 1.6;
+}
+#doc-content ul, #doc-content ol {
+    margin-left: 1.5em;
+    margin-bottom: 1.5em;
+    color: var(--text-l-muted);
+}
+#doc-content li {
+    margin-bottom: 0.5em;
+}
+#doc-content pre {
+    background: var(--ink-3);
+    padding: 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    margin-bottom: 1.5em;
+    border: 1px solid var(--rule-l);
+}
+#doc-content .mermaid {
+    display: flex;
+    justify-content: center;
+    margin: 2.5em 0;
+}
+#doc-content code {
+    font-family: var(--mono);
+    color: var(--amber-deep);
+    background: rgba(0,0,0,0.2);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+#doc-content pre code {
+    background: none;
+    padding: 0;
+}
+#doc-content hr {
+    border: none;
+    border-top: 1px solid var(--rule-l);
+    margin: 3em 0;
+}
+#doc-content details {
+    background: var(--ink);
+    padding: 16px;
+    border: 1px solid var(--rule-l);
+    border-radius: 4px;
+    margin-bottom: 2em;
+}
+#doc-content summary {
+    font-family: var(--mono);
+    color: var(--amber);
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-bottom: 1em;
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div>
+      <div class="wordmark">PROYECTO IA<span>.</span></div>
+      <div class="tagline">Análisis de sentimientos</div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="documentacion.html" style="color:var(--amber); border-color:var(--amber);">Estructura del proyecto</a>
+      <a href="presentacion.html">Presentación</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="notebook" id="doc-content">
+      <p style="font-family: var(--mono); color: var(--amber);">Cargando documentación en vivo desde la API...</p>
+  </div>
+</main>
+
+<footer class="wrap">
+  <div class="colophon">Proyecto IA</div>
+  <div class="foot-links">
+    <a href="https://github.com/Lubswer/IAProyecto.git">GitHub</a>
+  </div>
+</footer>
+
+<script>
+    // Fetch del Markdown a nuestra propia API
+    async function cargarDocumentacion() {
+        try {
+            const res = await fetch('http://localhost:8000/markdown');
+            if (!res.ok) throw new Error('Network error');
+            const markdownText = await res.text();
+            
+            // Parsear a HTML usando marked
+            document.getElementById('doc-content').innerHTML = marked.parse(markdownText);
+            
+            // Aplicar colores de sintaxis al código
+            hljs.highlightAll();
+            
+            // Renderizar diagramas de Mermaid
+            const mermaidBlocks = document.querySelectorAll('code.language-mermaid');
+            mermaidBlocks.forEach(function(el) {
+                const div = document.createElement('div');
+                div.className = 'mermaid';
+                div.textContent = el.textContent;
+                // Sustituir el elemento <pre> padre por el nuevo div
+                el.parentNode.replaceWith(div);
+            });
+            mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+            
+        } catch (e) {
+            document.getElementById('doc-content').innerHTML = 
+                '<p style="color:var(--brick);">Error: No se pudo cargar el archivo Evolucion_del_Proyecto.md. Asegúrate de que FastAPI esté corriendo (uvicorn main:app --reload).</p>';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarDocumentacion);
+</script>
+
+</body>
+</html>

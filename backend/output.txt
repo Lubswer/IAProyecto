@@ -1,0 +1,38 @@
+[1] Iniciando proceso de entrenamiento...
+    -> Archivo cargado exitosamente. Filas: 1622
+[2] Lematizando textos (esto puede tomar unos segundos)...
+[3] Entrenando modelo de Categoría...
+
+=== Reporte: Categoría ===
+                  precision    recall  f1-score   support
+
+Atención General       0.93      0.95      0.94       101
+     Facturación       0.99      0.99      0.99       101
+         Técnico       0.97      0.97      0.97       102
+          Ventas       0.99      0.97      0.98       102
+
+        accuracy                           0.97       406
+       macro avg       0.97      0.97      0.97       406
+    weighted avg       0.97      0.97      0.97       406
+
+    -> Modelo de categoría guardado como 'modelo_categoria.pkl'
+
+[4] Entrenando modelo de Sentimiento...
+
+=== Reporte: Sentimiento ===
+              precision    recall  f1-score   support
+
+    Negativo       0.98      0.98      0.98       135
+     Neutral       0.99      0.99      0.99       135
+    Positivo       0.99      0.99      0.99       136
+
+    accuracy                           0.99       406
+   macro avg       0.99      0.99      0.99       406
+weighted avg       0.99      0.99      0.99       406
+
+    -> Modelo de sentimiento guardado como 'modelo_sentimiento.pkl'
+
+[5] Exportando métricas a metricas.json...
+
+[OK] Entrenamiento Finalizado Exitosamente.
+    Ya puedes ejecutar 'uvicorn main:app --reload' para iniciar la API.

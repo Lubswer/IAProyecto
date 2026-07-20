@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div>
+      <div class="wordmark">PROYECTO IA<span>.</span></div>
+      <div class="tagline">Análisis de sentimientos</div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="documentacion.html">Estructura del Proyecto</a>
+      <a href="presentacion.html">Presentación</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">Contexto del Proyecto</div>
+    <h1>Análisis de opiniones de clientes</h1>
+    <p class="lede">
+      Nuestro proyecto se basa en el análisis de texto de opiniones de clientes.
+      Podemos clasificar el <strong>sentimiento</strong>
+      de las opiniones de los diferentes clientes a una Empresa de internet, simula un correo enviado por un cliente que  tiene una queja o busca información. O simplemente se le pidió una opinion sobre el servicio, se ordena la información del texto de entrada y se clasifica. De esta manera la empresa puede tener un monitoreo de la satisfacción de sus clientes. Sin preocuparse por el problema de la cantidad de correos recibidos y poder contestar y tratar los reclamos, mejorando su servicio.        
+      
+    </p>
+
+    <div class="spec-row">
+      <div class="card">
+        <div class="card-label">Métricas · Categoría</div>
+        <div class="metric-grid">
+          <div class="metric"><div class="metric-num" id="m_cat_acc">-%</div><div class="metric-name">Accuracy</div></div>
+          <div class="metric"><div class="metric-num" id="m_cat_prec">-%</div><div class="metric-name">Precision</div></div>
+          <div class="metric"><div class="metric-num" id="m_cat_rec">-%</div><div class="metric-name">Recall</div></div>
+          <div class="metric"><div class="metric-num" id="m_cat_f1">-%</div><div class="metric-name">F1</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Métricas · Sentimiento</div>
+        <div class="metric-grid">
+          <div class="metric positive"><div class="metric-num" id="m_sent_acc">-%</div><div class="metric-name">Accuracy</div></div>
+          <div class="metric positive"><div class="metric-num" id="m_sent_prec">-%</div><div class="metric-name">Precision</div></div>
+          <div class="metric positive"><div class="metric-num" id="m_sent_rec">-%</div><div class="metric-name">Recall</div></div>
+          <div class="metric positive"><div class="metric-num" id="m_sent_f1">-%</div><div class="metric-name">F1</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="split">
+    <div class="notebook" id="resultPanel">
+      <h2>Desglose de Resultados</h2>
+      <div id="resultContent">
+        <p style="color:var(--text-l-muted);font-style:italic;">Esperando texto para analizar. Los resultados detallados aparecerán aquí.</p>
+      </div>
+    </div>
+
+    <div class="slip-wrap">
+      <div class="slip">
+        <h2>Nueva consulta</h2>
+        <span class="slip-sub"></span>
+
+        <div class="field">
+          <label for="email">Correo del usuario</label>
+          <input id="email" type="email" placeholder="usuario@corp.net">
+        </div>
+
+        <div class="field">
+          <label for="texto">Texto a analizar</label>
+          <textarea id="texto" placeholder="Pegá el reporte o mensaje del usuario…"></textarea>
+          <div class="count"><span id="charcount">0</span> caracteres</div>
+        </div>
+
+        <button class="stamp-btn" id="analyzeBtn">Marcar texto →</button>
+        <div class="demo-note" id="statusNote"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ledger">
+    <div class="ledger-head">
+      <h2>Tabla de resultados del análisis</h2>
+      <span class="ledger-sub">Resultados de consultas</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Hora</th>
+          <th>Correo</th>
+          <th>Resumen</th>
+          <th>Categoría</th>
+          <th>Sentimiento</th>
+          <th>Entidades</th>
+        </tr>
+      </thead>
+      <tbody id="ledgerBody">
+        <tr class="empty-row" id="emptyRow">
+          <td colspan="6">Página en blanco — se llena a medida que analizás texto arriba.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="colophon">Proyecto IA</div>
+  <div class="foot-links">
+    <a href="https://github.com/Lubswer/IAProyecto.git">GitHub</a>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+
+</body>
+</html>
