@@ -31,9 +31,9 @@ def analizar_mensaje(texto):
     """Lematiza el texto y hace la predicción usando los modelos cargados."""
     cargar_modelos()
     
-    # 1. Extraer entidades usando spaCy original (sin lematizar)
+    # Parsear con spaCy
     doc = nlp(str(texto))
-    entidades = [{"texto": ent.text, "etiqueta": ent.label_} for ent in doc.ents]
+    tokens_originales = [token.text for token in doc]
     
     # 2. Lematizar usando el doc ya parseado
     texto_lem = " ".join(token.lemma_.lower() for token in doc if not token.is_punct)
@@ -59,5 +59,8 @@ def analizar_mensaje(texto):
         "sentimiento": sentimiento,
         "confianza_sentimiento": conf_sentimiento,
         "desglose_sentimiento": desglose_sentimiento,
-        "entidades": entidades
+        "nlp_debug": {
+            "tokens": tokens_originales,
+            "texto_lematizado": texto_lem
+        }
     }

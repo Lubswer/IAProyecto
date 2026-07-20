@@ -71,13 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const time = new Date().toLocaleTimeString('es-EC', {hour:'2-digit', minute:'2-digit'});
             const summary = text.length > 46 ? text.slice(0,46) + '…' : text;
 
-            // Procesar entidades
-            let entitiesHtml = '<span class="mono-cell" style="font-style:italic">Ninguna</span>';
-            if (data.entidades && data.entidades.length > 0) {
-                entitiesHtml = data.entidades.map(ent => 
-                    `<span class="tag-chip" style="margin-bottom:2px">${ent.texto}</span>`
-                ).join(' ');
-            }
+
 
             // Quitar mensaje de fila vacía
             const emptyRow = document.getElementById('emptyRow');
@@ -91,22 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td title="${text}">${summary}</td>
                 <td class="mono-cell">${data.categoria}</td>
                 <td><span class="tag-chip ${confClass}">${data.sentimiento}</span></td>
-                <td class="mono-cell">${entitiesHtml}</td>
             `;
             
             document.getElementById('ledgerBody').prepend(row);
             
             // Llenar panel de desglose (notebook)
-            let entidadesList = '';
-            if (data.entidades && data.entidades.length > 0) {
-                entidadesList = '<ul style="margin-top:4px; padding-left:16px;">';
-                data.entidades.forEach(ent => {
-                    entidadesList += `<li><b>${ent.texto}</b> <span style="color:var(--text-l-muted); font-size:0.85em;">[${ent.etiqueta}]</span></li>`;
-                });
-                entidadesList += '</ul>';
-            } else {
-                entidadesList = '<span style="color:var(--text-l-muted); font-style:italic;"> No se detectaron entidades específicas.</span>';
-            }
+
 
             resultContent.innerHTML = `
                 <p style="margin-bottom: 12px; font-family: var(--serif); font-size: 1.1rem; line-height: 1.4;">
@@ -128,10 +112,22 @@ document.addEventListener('DOMContentLoaded', () => {
                             </span>
                         </div>
                     </div>
-                    <div>
-                        <span style="font-family: var(--mono); color: var(--amber); text-transform: uppercase; font-size: 0.75rem;">Entidades Detectadas</span><br>
-                        ${entidadesList}
-                    </div>
+                    
+                    <details style="margin-top: 6px; background: var(--ink-2); padding: 10px; border-radius: 4px; border: 1px solid var(--rule-l);">
+                        <summary style="font-family: var(--mono); color: var(--amber); font-size: 0.75rem; text-transform: uppercase; cursor: pointer; outline: none;">
+                            Ver Proceso PLN
+                        </summary>
+                        <div style="margin-top: 12px; font-size: 0.85rem; color: var(--text-l-muted);">
+                            <p style="margin-bottom: 6px;"><b>1. Tokenización:</b> La IA cortó tu texto en estas piezas lógicas:</p>
+                            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 14px;">
+                                ${data.nlp_debug.tokens.map(t => `<span style="background: var(--ink-3); padding: 2px 6px; border-radius: 4px; font-family: var(--mono); color: var(--text-l);">${t}</span>`).join('')}
+                            </div>
+                            <p style="margin-bottom: 6px;"><b>2. Lematización y Limpieza:</b> Eliminó mayúsculas, puntuación y extrajo la raíz matemática de las palabras:</p>
+                            <div style="background: var(--ink-3); padding: 8px; border-radius: 4px; font-family: var(--mono); color: var(--text-l); word-break: break-all;">
+                                ${data.nlp_debug.texto_lematizado}
+                            </div>
+                        </div>
+                    </details>
                 </div>
             `;
             
